@@ -1,0 +1,4 @@
+# Local-only Node server — not a Vercel serverless function
+server.js
+resume/
+.vercel/
