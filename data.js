@@ -240,7 +240,11 @@ const portfolioData = {
       badge: "Web Development",
       grade: "Verified ✓",
       certId: "6D5E08A5B4A5770C",
-      description: "Successfully fulfilled the required training requirements and demonstrated commitment, achievement, and proficiency in Web Development. ISO 9001:2015 & MSME certified. Signatories: Rajesh Kumar (Director), Steven Agatha (Trainings Head).",
+      bullets: [
+        "Completed Web Development training with verified proficiency",
+        "ISO 9001:2015 and MSME certified, in association with intelleQA Academy",
+        "Signatories: Rajesh Kumar (Director) and Steven Agatha (Trainings Head)"
+      ],
       image: "assets/certificates/Infyntrek Certificate 01.jpg"
     },
     {
@@ -251,7 +255,11 @@ const portfolioData = {
       badge: "Internship",
       grade: "Verified ✓",
       certId: "6D5E08A5B4A5770C",
-      description: "Recognized for successful internship experience in Web Development demonstrating dedication, commitment, and significant proficiency in the subject matter. Signed by Steven (Training Manager) & Rajesh Kumar (Director).",
+      bullets: [
+        "Recognized for successful internship experience in Web Development",
+        "Demonstrated dedication, commitment, and proficiency on assigned work",
+        "Signed by Steven (Training Manager) and Rajesh Kumar (Director)"
+      ],
       image: "assets/certificates/Infyntrek Certificate 02.jpg"
     },
     {
@@ -262,7 +270,11 @@ const portfolioData = {
       badge: "Java Full Stack",
       grade: "Completed",
       certId: "Wipro DICE ID",
-      description: "Confirmed successful completion of the TalentNext Java Full Stack course. Credential issued 07 October 2024. Signed by Bibhuti Patnaik — General Manager, Global Head Talent Skilling, Wipro Limited.",
+      bullets: [
+        "Completed the TalentNext Java Full Stack course (May – Sep 2024)",
+        "Credential issued 07 October 2024 and verified via Wipro DICE ID",
+        "Signed by Bibhuti Patnaik — General Manager, Global Head Talent Skilling, Wipro Limited"
+      ],
       image: "assets/certificates/Wipro TalentNext - Java Full Stack Certification.jpg"
     },
     {
@@ -273,7 +285,11 @@ const portfolioData = {
       badge: "Identity Security · AI",
       grade: "Certified",
       certId: "Saviynt Certified",
-      description: "Successfully completed all requirements of the Saviynt Identity Security for AI Age certification. Credential recognized under the official Saviynt seal. Signed by Sachin Nayyar — CEO, Saviynt.",
+      bullets: [
+        "Completed Saviynt Identity Security for AI Age certification",
+        "8 CPE Hours under the official Saviynt Certified seal",
+        "Signed by Sachin Nayyar — CEO, Saviynt"
+      ],
       image: "assets/certificates/Saviynt Certificate.jpg"
     },
     {
@@ -284,7 +300,11 @@ const portfolioData = {
       badge: "Virtual Internship",
       grade: "Offered ✓",
       certId: "CS24NY323886",
-      description: "Selected for a Web Development virtual internship focused on learning, skill development, and hands-on knowledge. Educational opportunity emphasizing practical exposure in web technologies.",
+      bullets: [
+        "Selected for a Web Development virtual internship at CodSoft",
+        "Focused on learning, skill development, and hands-on web technologies",
+        "Offer Letter ID: CS24NY323886"
+      ],
       image: ""
     }
   ],

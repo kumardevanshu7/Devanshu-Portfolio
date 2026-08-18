@@ -260,6 +260,10 @@ function renderPortfolio(data) {
         ? `<span class="milestone-cert-id">ID: ${cert.certId}</span>`
         : '';
 
+      const bulletsHtml = Array.isArray(cert.bullets) && cert.bullets.length
+        ? `<ul class="milestone-bullets">${cert.bullets.map((b) => `<li>${b}</li>`).join('')}</ul>`
+        : `<p class="milestone-desc">${cert.description || ''}</p>`;
+
       return `
         <div class="snake-milestone-node">
           <div class="milestone-text-col">
@@ -270,7 +274,7 @@ function renderPortfolio(data) {
             </div>
             <h3 class="milestone-title">${cert.title}</h3>
             <div class="milestone-issuer">${cert.issuer}</div>
-            <p class="milestone-desc">${cert.description}</p>
+            ${bulletsHtml}
           </div>
           ${imageCol}
         </div>

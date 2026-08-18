@@ -197,7 +197,7 @@ body.editorial-theme {
   position: absolute;
   top: calc(100% + 10px);
   right: 0;
-  min-width: 280px;
+  min-width: 340px;
   padding: 8px;
   background: #FFFFFF;
   border: 1px solid rgba(24, 24, 27, 0.1);
@@ -238,20 +238,25 @@ body.editorial-theme {
 
 .connect-mail-go {
   flex-shrink: 0;
-  width: 30px;
   height: 30px;
-  border-radius: 50%;
+  padding: 0 10px 0 8px;
+  border-radius: 999px;
   background: var(--text-main);
   color: #FFFFFF;
   display: inline-flex;
   align-items: center;
-  justify-content: center;
+  gap: 5px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  font-family: var(--font-body);
+  white-space: nowrap;
   transition: transform 0.2s ease, background 0.2s ease;
 }
 
 .connect-mail-go svg {
-  width: 14px;
-  height: 14px;
+  width: 13px;
+  height: 13px;
+  flex-shrink: 0;
 }
 
 .connect-mail-row:hover .connect-mail-go {
@@ -1198,6 +1203,20 @@ body.editorial-theme {
   font-size: 0.83rem;
   color: var(--text-muted);
   line-height: 1.55;
+}
+
+.milestone-bullets {
+  margin: 0;
+  padding-left: 1.1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.milestone-bullets li {
+  font-size: 0.83rem;
+  color: var(--text-muted);
+  line-height: 1.5;
 }
 
 /* Full-Screen Certificate Image Lightbox */
