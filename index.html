@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kumar Devanshu — Portfolio '25 | Web Developer + Freelancer</title>
+  
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="Portfolio of Kumar Devanshu — Full-Stack Web Developer & Freelancer. Creator of NoteSeen, JobSeen, SeenTasks, SiteSeen, SeenTube, and Fam Sugar Track.">
+  <meta name="keywords" content="Kumar Devanshu, Portfolio, Web Developer, Full-Stack Developer, Freelancer, HTML, CSS, JavaScript, React, Node.js, MongoDB, Firebase">
+  <meta name="author" content="Kumar Devanshu">
+  
+  <!-- Google Fonts: Fredoka for Chunky Retro Title, Outfit, Plus Jakarta Sans, Syne -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600;700;800;900&family=Outfit:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+  
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="style.css">
+  
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@0.450.0/dist/umd/lucide.min.js"></script>
+  <!-- Lenis Smooth Scroll -->
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.min.js"></script>
+  <!-- GSAP & ScrollTrigger -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+</head>
+<body class="editorial-theme">
+
+  <!-- Ambient Paper Texture / Grain Layer -->
+  <div class="grain-overlay" aria-hidden="true"></div>
+
+  <!-- Top Floating Utility Navigation -->
+  <nav class="floating-nav" aria-label="Portfolio Navigation">
+    <div class="nav-pill">
+      <span class="nav-status"><span class="pulse-dot"></span> Available for Freelance & Projects</span>
+      <div class="nav-actions">
+        <div class="connect-dropdown" id="connect-dropdown">
+          <button
+            type="button"
+            id="connect-btn"
+            class="nav-btn"
+            title="Connect via email"
+            aria-expanded="false"
+            aria-haspopup="true"
+            aria-controls="connect-menu"
+          >
+            <i data-lucide="mail"></i>
+            <span>Connect</span>
+            <i data-lucide="chevron-down" class="connect-chevron"></i>
+          </button>
+          <div class="connect-menu" id="connect-menu" role="menu" hidden>
+            <a
+              id="connect-mail-link"
+              class="connect-mail-row"
+              href="mailto:kumardevanshu3001@gmail.com"
+              role="menuitem"
+              title="Open mail app"
+            >
+              <span class="connect-mail-id" id="connect-mail-id">kumardevanshu3001@gmail.com</span>
+              <span class="connect-mail-go" aria-hidden="true">
+                <i data-lucide="arrow-up-right"></i>
+              </span>
+            </a>
+          </div>
+        </div>
+        <button id="resume-btn" class="nav-btn primary" title="View or Download Resume">
+          <i data-lucide="file-text"></i>
+          <span>Resume</span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Editorial Canvas Container -->
+  <div id="smooth-wrapper">
+    <div id="smooth-content">
+      <main class="portfolio-page-container">
+        
+        <!-- ============================================================
+             SECTION 1: HERO & ICONIC RETRO HEADER
+             ============================================================ -->
+        <header class="hero-poster-header" id="top">
+          
+          <!-- Top Left/Side Name -->
+          <div class="poster-brand">
+            <span class="brand-eyebrow" id="brand-name-el">KUMAR<br>DEVANSHU</span>
+          </div>
+
+          <!-- Chunky Iconic "PORTFOLIO '25" Title -->
+          <div class="poster-title-wrap">
+            <h1 class="poster-title" id="poster-title">
+              <span class="letter-char"><span class="letter-tilt" style="--rot: -7deg;">P</span></span>
+              <span class="letter-char"><span class="letter-tilt" style="--rot: 5deg;">O</span></span>
+              <span class="letter-char"><span class="letter-tilt" style="--rot: -6deg;">R</span></span>
+              <span class="letter-char"><span class="letter-tilt" style="--rot: 4deg;">T</span></span>
+              <span class="letter-char"><span class="letter-tilt" style="--rot: -5deg;">F</span></span>
+              <span class="letter-char"><span class="letter-tilt" style="--rot: 6deg;">O</span></span>
+              <span class="letter-char"><span class="letter-tilt" style="--rot: -6deg;">L</span></span>
+              <span class="letter-char"><span class="letter-tilt" style="--rot: 4deg;">I</span></span>
+              <span class="letter-char"><span class="letter-tilt" style="--rot: -5deg;">O</span></span>
+              <span class="poster-year" id="poster-year-el"><span class="letter-tilt" style="--rot: 8deg;">'25</span></span>
+            </h1>
+          </div>
+
+          <!-- Centered Illustrated Character / Avatar Section -->
+          <div class="hero-avatar-stage" id="avatar-stage">
+            <div class="avatar-perspective-card" id="avatar-card">
+              
+              <!-- Placeholder Graphic / User Image Container -->
+              <div class="avatar-media-container" id="avatar-container">
+                <!-- User Profile Photo -->
+                <img id="avatar-img-view" src="assets/my profile.webp" alt="Kumar Devanshu Portrait" class="avatar-photo">
+                
+                <!-- Fallback Stylized SVG Portrait if image fails -->
+                <div class="avatar-svg-placeholder hidden" id="avatar-placeholder-view">
+                  <svg viewBox="0 0 400 460" class="avatar-vector-art" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="200" cy="200" r="160" fill="#F0E8DD" />
+                    <path d="M70 460 C90 320, 120 280, 150 250 L200 370 L250 250 C280 280, 310 320, 330 460 Z" fill="#C5A484" stroke="#1A1A1A" stroke-width="4.5"/>
+                    <path d="M160 250 Q200 300 240 250 L250 380 L150 380 Z" fill="#1E1E1E"/>
+                    <path d="M175 200 L175 250 Q200 265 225 250 L225 200 Z" fill="#E8BFA4"/>
+                    <path d="M150 140 C140 180, 160 225, 200 225 C240 225, 260 180, 250 140 C250 85, 150 85, 150 140 Z" fill="#F5CCA0"/>
+                    <path d="M140 150 C120 180, 110 260, 130 330 C135 345, 150 320, 155 290 C150 240, 145 190, 150 140 Z" fill="#2B2625"/>
+                    <path d="M260 150 C280 180, 290 260, 270 330 C265 345, 250 320, 245 290 C250 240, 255 190, 250 140 Z" fill="#2B2625"/>
+                  </svg>
+                </div>
+              </div>
+
+              <!-- Interactive Badge / Role Subtitle -->
+              <div class="avatar-hover-pill" title="Available for freelance & projects">
+                <i data-lucide="sparkles" class="icon-sm"></i>
+                <span id="avatar-caption">Web Developer + Freelancer</span>
+              </div>
+            </div>
+          </div>
+        </header>
+
+        <!-- ============================================================
+             SECTION 2: BIO & INTRODUCTION
+             ============================================================ -->
+        <section class="intro-section" aria-labelledby="greeting-heading">
+          <h2 id="greeting-heading" class="greeting-title">Hi, I’m Kumar Devanshu</h2>
+          <p class="bio-paragraph" id="bio-content">
+            Full-Stack Web Developer & Freelance Software Engineer. I specialize in building offline-first Progressive Web Apps (PWAs) and production web apps with HTML, CSS, JavaScript, React, Node.js, Express, MongoDB, TypeScript, and Firebase.
+          </p>
+        </section>
+
+        <!-- ============================================================
+             SECTION 3: EXPERIENCE, SOCIALS & TOOLS GRID
+             ============================================================ -->
+        <section class="profile-meta-grid" aria-label="Experience and Skills">
+          
+          <!-- Left Column: EXPERIENCE (3D tree + apples) -->
+          <div class="experience-block">
+            <h3 class="section-subheading">EXPERIENCE</h3>
+            <div class="experience-tree-wrap" id="experience-list">
+              <!-- Tree + 3 falling apples populated from data.js -->
+            </div>
+          </div>
+
+          <!-- Right Column: SOCIALS & TOOLS -->
+          <div class="meta-right-column">
+            
+            <!-- Socials -->
+            <div class="socials-sub-block">
+              <h3 class="section-subheading">SOCIALS</h3>
+              <div class="social-links-list" id="social-links-list">
+                <!-- Dynamically populated from data.js -->
+              </div>
+            </div>
+
+            <!-- Tools -->
+            <div class="tools-sub-block">
+              <h3 class="section-subheading">TOOLS & TECH</h3>
+              <div class="tools-logo-grid" id="tools-badge-list">
+                <!-- Snake-ladder logos populated from data.js -->
+              </div>
+            </div>
+
+          </div>
+
+        </section>
+
+        <!-- ============================================================
+             SECTION 4: "PROJECTS" 3x2 GRID SHOWCASE
+             ============================================================ -->
+        <section class="content-showcase-section" id="projects-section" aria-labelledby="projects-title">
+          
+          <div class="content-header-banner">
+            <h2 id="projects-title" class="content-mega-title">PROJECTS</h2>
+            <p class="section-lead-desc">Production-grade web apps engineered with offline-first PWAs, serverless cloud engines, and cryptographic security.</p>
+          </div>
+
+          <!-- 3x2 Grid Deck (3 cols Row 1, 3 cols Row 2) -->
+          <div class="projects-3x2-grid" id="projects-3x2-deck">
+            <!-- Dynamically populated from data.js (6 Projects) -->
+          </div>
+
+        </section>
+
+        <!-- ============================================================
+             SECTION 5: CERTIFICATES & MILESTONES (SNAKE ROPE BULLET TIMELINE)
+             ============================================================ -->
+        <section class="certificates-section" id="certificates-section" aria-labelledby="certificates-title">
+          
+          <div class="content-header-banner">
+            <h2 id="certificates-title" class="content-mega-title">CERTIFICATES</h2>
+            <p class="section-lead-desc">Verified credentials, technical specializations, and engineering milestones.</p>
+          </div>
+
+          <!-- Snake Rope Interactive Path & Milestones -->
+          <div class="snake-timeline-container" id="snake-timeline-container">
+            <!-- Continuous SVG Snake Line Path -->
+            <div class="snake-rope-track" aria-hidden="true">
+              <svg class="snake-rope-svg" viewBox="0 0 40 800" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+                <path class="snake-path-bg" d="M20 0 Q40 100 20 200 T20 400 T20 600 T20 800" fill="none" stroke="#E5E7EB" stroke-width="4" stroke-linecap="round"/>
+                <path id="snake-progress-path" class="snake-path-fill" d="M20 0 Q40 100 20 200 T20 400 T20 600 T20 800" fill="none" stroke="#C5A484" stroke-width="4.5" stroke-linecap="round"/>
+              </svg>
+            </div>
+
+            <!-- Snake Milestone Nodes List -->
+            <div class="snake-milestones-list" id="snake-milestones-list">
+              <!-- Dynamically populated from data.js -->
+            </div>
+          </div>
+
+        </section>
+
+        <!-- ============================================================
+             SECTION 6: EDUCATION
+             ============================================================ -->
+        <section class="education-section" id="education-section" aria-labelledby="education-title">
+          <div class="content-header-banner">
+            <h2 id="education-title" class="content-mega-title">EDUCATION</h2>
+            <p class="section-lead-desc">Academic qualifications and engineering foundations.</p>
+          </div>
+          <div class="education-list" id="education-list">
+            <!-- Populated from data.js -->
+          </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="portfolio-footer">
+          <div class="footer-inner">
+            <p class="footer-copy">© 2025 Kumar Devanshu • Full-Stack Web Developer & Freelancer</p>
+            <div class="footer-quick-links">
+              <a href="#top" class="scroll-top-link" id="scroll-top-btn"><i data-lucide="arrow-up"></i> Back to Top</a>
+            </div>
+          </div>
+        </footer>
+
+      </main>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       MODAL 1: PROJECT / CASE STUDY DETAIL DIALOG
+       ============================================================ -->
+  <dialog id="case-study-dialog" class="modern-dialog" aria-labelledby="modal-project-title" data-lenis-prevent>
+    <div class="dialog-card" data-lenis-prevent>
+
+      <!-- Hero Banner with Screenshot & Glassmorphic Details -->
+      <div class="dialog-header-banner" id="modal-header-banner">
+
+        <!-- Background Screenshot (fills entire banner) -->
+        <div class="modal-visual-showcase" id="modal-visual-display">
+          <!-- Screenshot injected by JS -->
+        </div>
+
+        <!-- Watermark Number (top-right) -->
+        <span class="modal-card-num" id="modal-card-num">01</span>
+
+        <!-- Top Floating Controls -->
+        <div class="modal-top-controls">
+          <div class="modal-status-badge">
+            <span class="pulse-dot-green"></span>
+            <span id="modal-status-text">Production App</span>
+          </div>
+          <button id="dialog-close-btn" class="dialog-close-btn" aria-label="Close modal">
+            <i data-lucide="x"></i>
+          </button>
+        </div>
+
+        <!-- Title content overlay (bottom of banner) -->
+        <div class="modal-header-overlay">
+          <span class="modal-tag-pill" id="modal-project-tag">PWA · React 19</span>
+          <h3 class="modal-title" id="modal-project-title">Project Title</h3>
+          <p class="modal-subtitle" id="modal-project-subtitle">Subtitle goes here</p>
+        </div>
+
+      </div>
+
+      <!-- Body: Modular Modern Cards Layout -->
+      <div class="dialog-body-content" data-lenis-prevent>
+        <div class="modal-grid-container">
+          
+          <!-- Left Column: Story & Deliverables -->
+          <div class="modal-col-main">
+            
+            <!-- Module 1: Overview Card -->
+            <div class="case-card-module overview-module">
+              <div class="module-header">
+                <div class="module-icon-wrap"><i data-lucide="compass" class="module-icon"></i></div>
+                <h4 class="module-title">Architecture &amp; Core Philosophy</h4>
+              </div>
+              <p class="overview-body" id="modal-overview-text">Description details...</p>
+            </div>
+
+            <!-- Module 2: Key Deliverables Card -->
+            <div class="case-card-module deliverables-module">
+              <div class="module-header">
+                <div class="module-icon-wrap"><i data-lucide="layers" class="module-icon"></i></div>
+                <h4 class="module-title">Key Engineering Deliverables</h4>
+              </div>
+              <div class="deliverables-stack" id="modal-deliverables-list">
+                <!-- Injected via JS as styled feature rows -->
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Right Column: Benchmarks, Tech Stack & Action -->
+          <div class="modal-col-side">
+            
+            <!-- Module 3: Benchmarks / Metrics -->
+            <div class="case-card-module metrics-module">
+              <div class="module-header">
+                <div class="module-icon-wrap"><i data-lucide="zap" class="module-icon"></i></div>
+                <h4 class="module-title">Impact &amp; Benchmarks</h4>
+              </div>
+              <div class="metrics-tiles-grid" id="modal-metrics-list">
+                <!-- Rendered metric tiles -->
+              </div>
+            </div>
+
+            <!-- Module 4: Tech Stack -->
+            <div class="case-card-module stack-module">
+              <div class="module-header">
+                <div class="module-icon-wrap"><i data-lucide="code-2" class="module-icon"></i></div>
+                <h4 class="module-title">Tech Stack</h4>
+              </div>
+              <div class="modal-tags-wrap" id="modal-tech-stack-list">
+                <!-- Tech tags -->
+              </div>
+            </div>
+
+            <!-- Module 5: Primary Action Card -->
+            <div class="case-action-card">
+              <div class="action-card-info">
+                <span class="action-card-label">Live Deployment</span>
+                <span class="action-card-sub">Hosted on Vercel · HTTPS</span>
+              </div>
+              <a href="#" id="modal-action-link" target="_blank" rel="noopener noreferrer" class="modal-launch-btn">
+                <span>Launch Live Application</span>
+                <i data-lucide="arrow-up-right"></i>
+              </a>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </dialog>
+
+
+
+  <!-- ============================================================
+       MODAL 2: LIVE CUSTOMIZER DRAWER (FOR EASY UPDATES)
+       ============================================================ -->
+  <dialog id="customizer-dialog" class="modern-dialog customizer-modal" aria-labelledby="customizer-title" data-lenis-prevent>
+    <div class="dialog-card customizer-card" data-lenis-prevent>
+
+      <div class="customizer-head">
+        <div class="head-left">
+          <i data-lucide="sliders-horizontal" class="icon-accent"></i>
+          <div>
+            <h3 id="customizer-title" class="customizer-h3">Portfolio Quick Customizer</h3>
+            <p class="customizer-desc">Easily update your name, bio, links, and resume without touching code.</p>
+          </div>
+        </div>
+        <button id="customizer-close-btn" class="dialog-close-btn" aria-label="Close Customizer">
+          <i data-lucide="x"></i>
+        </button>
+      </div>
+
+      <form id="customizer-form" class="customizer-form-content">
+        <div class="form-tabs-bar">
+          <button type="button" class="tab-btn active" data-tab="tab-general">General Info</button>
+          <button type="button" class="tab-btn" data-tab="tab-socials">Socials & Links</button>
+          <button type="button" class="tab-btn" data-tab="tab-projects">6 Projects (3x2)</button>
+          <button type="button" class="tab-btn" data-tab="tab-export">Export Code</button>
+        </div>
+
+        <!-- Tab 1: General -->
+        <div class="tab-pane active" id="tab-general">
+          <div class="form-row-2">
+            <div class="form-group">
+              <label for="cust-name-header">Name in Header (Supports line breaks):</label>
+              <textarea id="cust-name-header" rows="2">KUMAR&#10;DEVANSHU</textarea>
+            </div>
+            <div class="form-group">
+              <label for="cust-greeting">Greeting / Title:</label>
+              <input type="text" id="cust-greeting" value="Hi, I'm Kumar Devanshu">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="cust-bio">Bio Paragraph:</label>
+            <textarea id="cust-bio" rows="4">Full-Stack Web Developer & Freelance Software Engineer. I specialize in building offline-first Progressive Web Apps (PWAs) and production web apps with HTML, CSS, JavaScript, React, Node.js, Express, MongoDB, TypeScript, and Firebase.</textarea>
+          </div>
+
+          <div class="form-row-2">
+            <div class="form-group">
+              <label for="cust-resume-url">Resume Link (Google Drive URL or PDF path):</label>
+              <input type="text" id="cust-resume-url" value="#" placeholder="https://drive.google.com/your-resume-link">
+            </div>
+            <div class="form-group">
+              <label for="cust-avatar-url">Avatar Photo Path:</label>
+              <input type="text" id="cust-avatar-url" value="assets/my profile.webp">
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab 2: Socials -->
+        <div class="tab-pane" id="tab-socials">
+          <div class="form-group">
+            <label for="cust-github-url">GitHub Profile URL:</label>
+            <input type="text" id="cust-github-url" value="https://github.com/kumardevanshu7">
+          </div>
+          <div class="form-group">
+            <label for="cust-linkedin-url">LinkedIn Profile URL:</label>
+            <input type="text" id="cust-linkedin-url" value="https://www.linkedin.com/in/kumardevanshu31/">
+          </div>
+        </div>
+
+        <!-- Tab 3: Projects -->
+        <div class="tab-pane" id="tab-projects">
+          <p class="tab-help-hint">You can adjust the titles, short reviews, and live URLs of the 6 showcase cards below:</p>
+          <div class="projects-quick-edit-list" id="projects-quick-edit-list">
+            <!-- Dynamically populated fields for cards 01 to 06 -->
+          </div>
+        </div>
+
+        <!-- Tab 4: Export -->
+        <div class="tab-pane" id="tab-export">
+          <p class="tab-help-hint">Copy this updated JavaScript configuration and paste it into your <code>data.js</code> file to save permanently:</p>
+          <textarea id="cust-export-json" class="code-export-box" readonly rows="10"></textarea>
+          <div class="export-actions">
+            <button type="button" id="copy-json-btn" class="modal-primary-btn">
+              <i data-lucide="copy"></i> Copy Configuration
+            </button>
+          </div>
+        </div>
+
+        <div class="customizer-foot">
+          <button type="button" id="apply-changes-btn" class="nav-btn primary">
+            <i data-lucide="check"></i> Apply Live Preview
+          </button>
+          <button type="button" id="reset-defaults-btn" class="nav-btn">Reset Defaults</button>
+        </div>
+      </form>
+    </div>
+  </dialog>
+
+  <!-- Application Logic & Scripts -->
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
