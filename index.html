@@ -53,9 +53,14 @@
             aria-haspopup="true"
             aria-controls="connect-menu"
           >
-            <i data-lucide="mail"></i>
             <span>Connect</span>
-            <i data-lucide="chevron-down" class="connect-chevron"></i>
+            <svg class="connect-plug" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+              <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+            </svg>
+            <svg class="connect-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M6 9l6 6 6-6"></path>
+            </svg>
           </button>
           <div class="connect-menu" id="connect-menu" role="menu" hidden>
             <a
@@ -76,10 +81,40 @@
             </a>
           </div>
         </div>
-        <button id="resume-btn" class="nav-btn primary" title="View or Download Resume">
-          <i data-lucide="file-text"></i>
-          <span>Resume</span>
-        </button>
+        <div class="resume-dropdown" id="resume-dropdown">
+          <button
+            type="button"
+            id="resume-btn"
+            class="nav-btn primary"
+            title="Preview resume"
+            aria-expanded="false"
+            aria-haspopup="true"
+            aria-controls="resume-menu"
+          >
+            <i data-lucide="file-text"></i>
+            <span>Resume</span>
+          </button>
+          <div class="resume-menu" id="resume-menu" hidden>
+            <div class="resume-preview-frame">
+              <iframe
+                id="resume-preview"
+                title="Resume preview"
+                loading="lazy"
+                allow="fullscreen"
+              ></iframe>
+            </div>
+            <a
+              id="resume-fullscreen-btn"
+              class="resume-fullscreen-btn"
+              href="#"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <i data-lucide="maximize-2"></i>
+              <span>View in full screen</span>
+            </a>
+          </div>
+        </div>
       </div>
     </div>
   </nav>

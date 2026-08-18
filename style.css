@@ -87,7 +87,7 @@ body.editorial-theme {
   top: 18px;
   left: 50%;
   transform: translateX(-50%);
-  z-index: 100;
+  z-index: 1001;
   width: auto;
   max-width: min(92vw, 720px);
   box-sizing: border-box;
@@ -183,9 +183,17 @@ body.editorial-theme {
   position: relative;
 }
 
+.connect-plug,
 .connect-chevron {
-  width: 12px !important;
-  height: 12px !important;
+  display: block;
+  flex-shrink: 0;
+  width: 14px;
+  height: 14px;
+}
+
+.connect-chevron {
+  width: 12px;
+  height: 12px;
   transition: transform 0.2s ease;
 }
 
@@ -266,6 +274,85 @@ body.editorial-theme {
 .connect-mail-row:hover .connect-mail-go {
   background: var(--brand-tan-dark, #8B7355);
   transform: translate(1px, -1px);
+}
+
+.connect-plug {
+  display: block;
+  flex-shrink: 0;
+  width: 14px;
+  height: 14px;
+}
+
+/* Resume preview dropdown */
+.resume-dropdown {
+  position: relative;
+}
+
+.resume-dropdown.is-open .nav-btn.primary {
+  background: #333338;
+}
+
+.resume-menu {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  width: min(380px, calc(100vw - 24px));
+  padding: 8px;
+  background: #FFFFFF;
+  border: 1px solid rgba(24, 24, 27, 0.1);
+  border-radius: 14px;
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.12);
+  z-index: 120;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.resume-menu[hidden] {
+  display: none;
+}
+
+.resume-preview-frame {
+  width: 100%;
+  height: 420px;
+  border-radius: 10px;
+  overflow: hidden;
+  background: #F4EFEA;
+  border: 1px solid rgba(24, 24, 27, 0.08);
+}
+
+.resume-preview-frame iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  display: block;
+  background: #FFFFFF;
+}
+
+.resume-fullscreen-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  height: 38px;
+  border-radius: 10px;
+  background: var(--text-main);
+  color: #FFFFFF;
+  text-decoration: none;
+  font-size: 0.78rem;
+  font-weight: 700;
+  font-family: var(--font-body);
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.resume-fullscreen-btn:hover {
+  background: #333338;
+  transform: translateY(-1px);
+}
+
+.resume-fullscreen-btn svg {
+  width: 14px;
+  height: 14px;
 }
 
 /* --- Main Editorial Poster Canvas --- */
@@ -625,7 +712,9 @@ body.editorial-theme {
   font-family: var(--font-heading);
   color: var(--text-main);
   line-height: 1.25;
-  overflow-wrap: anywhere;
+  overflow-wrap: break-word;
+  word-break: normal;
+  hyphens: none;
 }
 
 .exp-role {
@@ -925,6 +1014,9 @@ body.editorial-theme {
   font-weight: 800;
   color: var(--text-main);
   line-height: 1.2;
+  word-break: normal;
+  overflow-wrap: break-word;
+  hyphens: none;
 }
 
 .card-proj-num {
@@ -941,6 +1033,9 @@ body.editorial-theme {
   color: var(--text-muted);
   margin-bottom: 8px;
   line-height: 1.3;
+  word-break: normal;
+  overflow-wrap: break-word;
+  hyphens: none;
 }
 
 /* Short Review */
@@ -950,6 +1045,9 @@ body.editorial-theme {
   line-height: 1.45;
   margin-bottom: 16px;
   flex: 1;
+  word-break: normal;
+  overflow-wrap: break-word;
+  hyphens: none;
 }
 
 /* Card Action Buttons */
@@ -1741,6 +1839,9 @@ body.modal-open {
   color: #27272A;
   line-height: 1.45;
   font-weight: 500;
+  word-break: normal;
+  overflow-wrap: break-word;
+  hyphens: none;
 }
 
 /* Metrics KPI Grid */
@@ -1751,13 +1852,20 @@ body.modal-open {
 }
 
 .metric-tile-card {
+  container-type: inline-size;
   background: linear-gradient(145deg, #FAF8F5 0%, #F5EFE6 100%);
   border: 1px solid rgba(24, 24, 27, 0.07);
   border-radius: 12px;
-  padding: 12px 6px 10px;
+  padding: 12px 8px 14px;
   text-align: center;
   position: relative;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 74px;
+  box-sizing: border-box;
 }
 
 .metric-tile-card::before {
@@ -1772,21 +1880,31 @@ body.modal-open {
 
 .metric-tile-val {
   font-family: var(--font-heading);
-  font-size: 1.25rem;
+  font-size: clamp(0.72rem, 16cqi, 1.15rem);
   font-weight: 900;
   color: #18181B;
-  line-height: 1.1;
+  line-height: 1.15;
   margin-bottom: 4px;
-  word-break: break-word;
+  max-width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-break: normal;
+  overflow-wrap: normal;
+  hyphens: none;
 }
 
 .metric-tile-lbl {
-  font-size: 0.6rem;
+  font-size: clamp(0.5rem, 9cqi, 0.6rem);
   font-weight: 800;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.04em;
   color: #71717A;
-  line-height: 1.3;
+  line-height: 1.25;
+  max-width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 /* Tech Stack Tags */
@@ -2101,6 +2219,15 @@ body.modal-open {
     right: 0;
   }
 
+  .resume-menu {
+    width: min(360px, calc(100vw - 28px));
+    right: 0;
+  }
+
+  .resume-preview-frame {
+    height: min(58vh, 380px);
+  }
+
   .modal-grid-container {
     grid-template-columns: 1fr;
     gap: 16px;
@@ -2168,7 +2295,7 @@ body.modal-open {
   }
 
   .metric-tile-card {
-    padding: 10px 4px 8px;
+    padding: 10px 6px 8px;
   }
 
   .metric-tile-val {

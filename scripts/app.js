@@ -578,15 +578,47 @@ function initDialogHandlers() {
     }
   }
 
-  // Resume Button
+  // Resume dropdown (preview + full screen)
+  const resumeDropdown = document.getElementById('resume-dropdown');
   const resumeBtn = document.getElementById('resume-btn');
-  if (resumeBtn) {
-    resumeBtn.addEventListener('click', () => {
-      if (portfolioData.profile.resumeUrl && portfolioData.profile.resumeUrl !== '#') {
-        window.open(portfolioData.profile.resumeUrl, '_blank');
-      } else {
-        alert('Resume link abhi set nahi hai. LaTeX source resume/main.tex mein saved hai.');
+  const resumeMenu = document.getElementById('resume-menu');
+  const resumePreview = document.getElementById('resume-preview');
+  const resumeFullscreenBtn = document.getElementById('resume-fullscreen-btn');
+  const resumeUrl = (portfolioData.profile && portfolioData.profile.resumeUrl) || '#';
+
+  function drivePreviewUrl(url) {
+    const match = String(url).match(/\/file\/d\/([^/]+)/);
+    if (match) return `https://drive.google.com/file/d/${match[1]}/preview`;
+    return url;
+  }
+
+  if (resumeFullscreenBtn && resumeUrl && resumeUrl !== '#') {
+    resumeFullscreenBtn.href = resumeUrl;
+  }
+
+  function setResumeOpen(open) {
+    if (!resumeDropdown || !resumeBtn || !resumeMenu) return;
+    resumeDropdown.classList.toggle('is-open', open);
+    resumeBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    resumeMenu.hidden = !open;
+    if (open && resumePreview && resumeUrl && resumeUrl !== '#') {
+      const previewSrc = drivePreviewUrl(resumeUrl);
+      if (resumePreview.getAttribute('src') !== previewSrc) {
+        resumePreview.src = previewSrc;
       }
+      if (window.lucide) lucide.createIcons();
+    }
+  }
+
+  if (resumeBtn && resumeMenu) {
+    resumeBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (!resumeUrl || resumeUrl === '#') {
+        alert('Resume link abhi set nahi hai.');
+        return;
+      }
+      setConnectOpen(false);
+      setResumeOpen(resumeMenu.hidden);
     });
   }
 
@@ -611,20 +643,27 @@ function initDialogHandlers() {
   if (connectBtn && connectMenu) {
     connectBtn.addEventListener('click', (e) => {
       e.stopPropagation();
+      setResumeOpen(false);
       setConnectOpen(connectMenu.hidden);
       if (window.lucide) lucide.createIcons();
     });
-
-    document.addEventListener('click', (e) => {
-      if (connectDropdown && !connectDropdown.contains(e.target)) {
-        setConnectOpen(false);
-      }
-    });
-
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') setConnectOpen(false);
-    });
   }
+
+  document.addEventListener('click', (e) => {
+    if (connectDropdown && !connectDropdown.contains(e.target)) {
+      setConnectOpen(false);
+    }
+    if (resumeDropdown && !resumeDropdown.contains(e.target)) {
+      setResumeOpen(false);
+    }
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      setConnectOpen(false);
+      setResumeOpen(false);
+    }
+  });
 
   // Customizer Dialog (kept for optional use; not shown in nav)
   const customizerDialog = document.getElementById('customizer-dialog');
