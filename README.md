@@ -3,7 +3,7 @@
 Personal portfolio of **Kumar Devanshu** — Full-Stack Web Developer.  
 Live projects, certificates, education, and contact — in one place.
 
-**Live:** *coming after Vercel deploy*
+**Live:** [devanshu-portfolio-navy.vercel.app](https://devanshu-portfolio-navy.vercel.app/)
 
 ---
 
@@ -58,7 +58,7 @@ You can also open `index.html` directly, or use any static server.
 4. Build command: leave empty
 5. Deploy
 
-After it is live, drop the URL in `data.js` (`resumeUrl` when the PDF is ready) and in `resume/main.tex` (`portfolioURL`).
+After it is live, drop the PDF Drive URL in `data.js` (`resumeUrl`). Portfolio URL is already set in `resume/main.tex`.
 
 ---
 
