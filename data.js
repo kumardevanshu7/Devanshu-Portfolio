@@ -291,21 +291,6 @@ const portfolioData = {
         "Signed by Sachin Nayyar — CEO, Saviynt"
       ],
       image: "assets/certificates/Saviynt Certificate.jpg"
-    },
-    {
-      id: "cert-codsoft",
-      year: "Oct – Nov 2024",
-      title: "Web Development Virtual Internship",
-      issuer: "CodSoft  ·  Offer Letter ID: CS24NY323886",
-      badge: "Virtual Internship",
-      grade: "Offered ✓",
-      certId: "CS24NY323886",
-      bullets: [
-        "Selected for a Web Development virtual internship at CodSoft",
-        "Focused on learning, skill development, and hands-on web technologies",
-        "Offer Letter ID: CS24NY323886"
-      ],
-      image: ""
     }
   ],
 

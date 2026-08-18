@@ -22,7 +22,7 @@ No framework. Static site. Ships cleanly on **Vercel**.
 | **Hero** | Portrait, tilted `PORTFOLIO '25` title, Connect + Resume |
 | **Experience** | Infyntrek Systèmes (MERN intern) · A+ Electrical (apprentice) |
 | **Projects** | NoteSeen, JobSeen, SeenTasks, SiteSeen, SeenTube, Fam Sugar Track |
-| **Certificates** | Infyntrek, Wipro TalentNext, Saviynt, CodSoft |
+| **Certificates** | Infyntrek, Wipro TalentNext, Saviynt |
 | **Education** | B.Tech IT (Galgotias, 2025) · Diploma Electrical (2020) |
 
 ---
