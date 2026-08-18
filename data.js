@@ -28,11 +28,11 @@ const portfolioData = {
     },
     {
       id: 2,
-      company: "A+ Electrical",
-      mark: "A+",
-      role: "Electrical Apprentice",
+      company: "Indian Oil Corporation Limited",
+      mark: "IO",
+      role: "SAP Analyst (Apprentice)",
       period: "Feb 2021 – Feb 2022",
-      description: "Supported on-site electrical operations: installation checks, wiring and panel work, maintenance logs, and troubleshooting with senior electricians. Documented site reports and helped keep field jobs accurate, safe, and on schedule."
+      description: "Supported SAP software operations with cross-functional teams. Documented technical requirements, troubleshot issues, and assisted in data management and reporting for critical workflows."
     }
   ],
 
