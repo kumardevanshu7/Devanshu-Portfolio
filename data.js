@@ -12,7 +12,7 @@ const portfolioData = {
     roleSubtitle: "Web Developer + Freelancer",
     bio: "Full-Stack Web Developer & Freelance Software Engineer. I specialize in building offline-first Progressive Web Apps (PWAs) and production web apps with HTML, CSS, JavaScript, React, Node.js, Express, MongoDB, TypeScript, and Firebase.",
     avatarImage: "assets/my profile.webp",
-    resumeUrl: "https://drive.google.com/file/d/1acpWs_bNQ0cZU5GKBwEX_LebufhRXZzy/view?usp=drive_link",
+    resumeUrl: "https://drive.google.com/file/d/1acpWs_bNQ0cZU5GKBwEX_LebufhRXZzy/view?usp=sharing",
     email: "kumardevanshu3001@gmail.com",
   },
 
