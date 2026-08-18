@@ -35,14 +35,57 @@
 </head>
 <body class="editorial-theme">
 
+  <!-- Top Scroll Reading Progress Bar -->
+  <div class="scroll-progress-bar" id="scroll-progress-bar" aria-hidden="true"></div>
+
   <!-- Ambient Paper Texture / Grain Layer -->
   <div class="grain-overlay" aria-hidden="true"></div>
 
   <!-- Top Floating Utility Navigation -->
   <nav class="floating-nav" aria-label="Portfolio Navigation">
     <div class="nav-pill">
-      <span class="nav-status"><span class="pulse-dot"></span> <span class="nav-status-text">Available for Freelance &amp; Projects</span></span>
+      <span class="nav-status">
+        <span class="pulse-dot"></span>
+        <span class="nav-status-text">Available for Freelance</span>
+        <span class="live-clock-pill" id="live-ist-clock">IST --:-- --</span>
+      </span>
       <div class="nav-actions">
+        <!-- Theme Sliding Toggle Switch (Light / Dark) -->
+        <button
+          type="button"
+          id="theme-toggle-btn"
+          class="theme-toggle-switch"
+          title="Toggle Light / Dark Mode"
+          aria-label="Toggle Light or Dark Mode"
+          role="switch"
+          aria-checked="false"
+        >
+          <span class="theme-switch-track">
+            <!-- Sun Icon (Light Mode) -->
+            <span class="theme-switch-icon icon-sun" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="4"></circle>
+                <path d="M12 2v2"></path>
+                <path d="M12 20v2"></path>
+                <path d="m4.93 4.93 1.41 1.41"></path>
+                <path d="m17.66 17.66 1.41 1.41"></path>
+                <path d="M2 12h2"></path>
+                <path d="M20 12h2"></path>
+                <path d="m6.34 17.66-1.41 1.41"></path>
+                <path d="m19.07 4.93-1.41 1.41"></path>
+              </svg>
+            </span>
+            <!-- Moon Icon (Dark Mode) -->
+            <span class="theme-switch-icon icon-moon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>
+              </svg>
+            </span>
+            <!-- Sliding Ball Thumb -->
+            <span class="theme-switch-thumb" aria-hidden="true"></span>
+          </span>
+        </button>
+
         <div class="connect-dropdown" id="connect-dropdown">
           <button
             type="button"
@@ -71,7 +114,7 @@
               title="Open mail app"
             >
               <span class="connect-mail-id" id="connect-mail-id">kumardevanshu3001@gmail.com</span>
-              <span class="connect-mail-go">
+              <span class="connect-mail-go" id="connect-mail-go-btn">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                   <path d="M7 17L17 7"></path>
                   <path d="M8 7h9v9"></path>
@@ -137,23 +180,47 @@
           <!-- Chunky Iconic "PORTFOLIO '25" Title -->
           <div class="poster-title-wrap">
             <h1 class="poster-title" id="poster-title">
-              <span class="letter-char"><span class="letter-tilt" style="--rot: -7deg;">P</span></span>
-              <span class="letter-char"><span class="letter-tilt" style="--rot: 5deg;">O</span></span>
-              <span class="letter-char"><span class="letter-tilt" style="--rot: -6deg;">R</span></span>
-              <span class="letter-char"><span class="letter-tilt" style="--rot: 4deg;">T</span></span>
-              <span class="letter-char"><span class="letter-tilt" style="--rot: -5deg;">F</span></span>
-              <span class="letter-char"><span class="letter-tilt" style="--rot: 6deg;">O</span></span>
-              <span class="letter-char"><span class="letter-tilt" style="--rot: -6deg;">L</span></span>
-              <span class="letter-char"><span class="letter-tilt" style="--rot: 4deg;">I</span></span>
-              <span class="letter-char"><span class="letter-tilt" style="--rot: -5deg;">O</span></span>
+              <span class="letter-char" data-char="P"><span class="letter-tilt" style="--rot: -7deg;">P</span></span>
+              <span class="letter-char" data-char="O"><span class="letter-tilt" style="--rot: 5deg;">O</span></span>
+              <span class="letter-char" data-char="R"><span class="letter-tilt" style="--rot: -6deg;">R</span></span>
+              <span class="letter-char" data-char="T"><span class="letter-tilt" style="--rot: 4deg;">T</span></span>
+              <span class="letter-char" data-char="F"><span class="letter-tilt" style="--rot: -5deg;">F</span></span>
+              <span class="letter-char" data-char="O"><span class="letter-tilt" style="--rot: 6deg;">O</span></span>
+              <span class="letter-char" data-char="L"><span class="letter-tilt" style="--rot: -6deg;">L</span></span>
+              <span class="letter-char" data-char="I"><span class="letter-tilt" style="--rot: 4deg;">I</span></span>
+              <span class="letter-char" data-char="O"><span class="letter-tilt" style="--rot: -5deg;">O</span></span>
               <span class="poster-year" id="poster-year-el"><span class="letter-tilt" style="--rot: 8deg;">'25</span></span>
             </h1>
           </div>
 
           <!-- Centered Illustrated Character / Avatar Section -->
           <div class="hero-avatar-stage" id="avatar-stage">
+            
+            <!-- Ambient Luminous Halo / Radial Backlight -->
+            <div class="avatar-ambient-glow" aria-hidden="true"></div>
+
+            <!-- Floating Parallax Micro-Badges around Avatar -->
+            <div class="floating-micro-badge badge-pwa" data-parallax-depth="15">
+              <span class="badge-green-dot" aria-hidden="true"></span>
+              <i data-lucide="zap" class="micro-badge-icon"></i>
+              <span>Offline PWA</span>
+            </div>
+            <div class="floating-micro-badge badge-crypto" data-parallax-depth="-18">
+              <span class="badge-green-dot" aria-hidden="true"></span>
+              <i data-lucide="shield-check" class="micro-badge-icon"></i>
+              <span>AES-256 Crypto</span>
+            </div>
+            <div class="floating-micro-badge badge-stack" data-parallax-depth="22">
+              <span class="badge-green-dot" aria-hidden="true"></span>
+              <i data-lucide="layers" class="micro-badge-icon"></i>
+              <span>Full-Stack MERN</span>
+            </div>
+
             <div class="avatar-perspective-card" id="avatar-card">
               
+              <!-- Holographic Sheen Reflection Layer -->
+              <div class="avatar-sheen-layer" aria-hidden="true"></div>
+
               <!-- Placeholder Graphic / User Image Container -->
               <div class="avatar-media-container" id="avatar-container">
                 <!-- User Profile Photo -->
@@ -175,6 +242,7 @@
 
               <!-- Interactive Badge / Role Subtitle -->
               <div class="avatar-hover-pill" title="Available for freelance & projects">
+                <span class="badge-green-dot" aria-hidden="true"></span>
                 <i data-lucide="sparkles" class="icon-sm"></i>
                 <span id="avatar-caption">Web Developer + Freelancer</span>
               </div>
@@ -238,6 +306,26 @@
             <p class="section-lead-desc">Production-grade web apps engineered with offline-first PWAs, serverless cloud engines, and cryptographic security.</p>
           </div>
 
+          <!-- Interactive Category Filter Pills Bar -->
+          <div class="project-filter-bar" id="project-filter-bar" role="tablist" aria-label="Filter Projects">
+            <button type="button" class="filter-pill active" data-filter="all" role="tab" aria-selected="true">
+              <span>All Projects</span>
+              <span class="filter-count">6</span>
+            </button>
+            <button type="button" class="filter-pill" data-filter="pwa" role="tab" aria-selected="false">
+              <span>Offline PWAs</span>
+              <span class="filter-count">2</span>
+            </button>
+            <button type="button" class="filter-pill" data-filter="fullstack" role="tab" aria-selected="false">
+              <span>Full-Stack Web</span>
+              <span class="filter-count">3</span>
+            </button>
+            <button type="button" class="filter-pill" data-filter="ai" role="tab" aria-selected="false">
+              <span>AI &amp; Smart Tools</span>
+              <span class="filter-count">1</span>
+            </button>
+          </div>
+
           <!-- 3x2 Grid Deck (3 cols Row 1, 3 cols Row 2) -->
           <div class="projects-3x2-grid" id="projects-3x2-deck">
             <!-- Dynamically populated from data.js (6 Projects) -->
@@ -257,11 +345,13 @@
 
           <!-- Snake Rope Interactive Path & Milestones -->
           <div class="snake-timeline-container" id="snake-timeline-container">
-            <!-- Continuous SVG Snake Line Path -->
-            <div class="snake-rope-track" aria-hidden="true">
+            <!-- Continuous SVG Snake Line Path with Synchronized Traveling Spark -->
+            <div class="snake-rope-track" id="snake-rope-track" aria-hidden="true">
               <svg class="snake-rope-svg" viewBox="0 0 40 800" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
                 <path class="snake-path-bg" d="M20 0 Q40 100 20 200 T20 400 T20 600 T20 800" fill="none" stroke="#E5E7EB" stroke-width="4" stroke-linecap="round"/>
                 <path id="snake-progress-path" class="snake-path-fill" d="M20 0 Q40 100 20 200 T20 400 T20 600 T20 800" fill="none" stroke="#C5A484" stroke-width="4.5" stroke-linecap="round"/>
+                <!-- Traveling Spark Head Bead — Synchronized with Stroke Tip -->
+                <circle id="snake-spark-head" class="snake-spark-head" cx="20" cy="0" r="5.5" />
               </svg>
             </div>
 
@@ -510,6 +600,10 @@
       </form>
     </div>
   </dialog>
+
+  <!-- Custom Fluid Follow Cursor (Desktop) -->
+  <div class="custom-cursor-dot" id="cursor-dot" aria-hidden="true"></div>
+  <div class="custom-cursor-ring" id="cursor-ring" aria-hidden="true"></div>
 
   <!-- Application Logic & Scripts -->
   <script src="data.js"></script>

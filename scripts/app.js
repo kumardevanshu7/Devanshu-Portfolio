@@ -1,32 +1,54 @@
-// ==========================================================================
-// PORTFOLIO '25 - JAVASCRIPT APPLICATION LOGIC
-// Kumar Devanshu • 3x2 Projects Grid, Snake Rope Timeline & 3D Tilt
-// ==========================================================================
-
-document.addEventListener('DOMContentLoaded', () => {
-  // 1. Initialize Lenis Smooth Scroll
-  initSmoothScroll();
-
-  // 2. Render Portfolio Data (Projects, Profile, Certificates)
+function bootPortfolio() {
+  // 1. Render Portfolio Data FIRST so DOM elements and cards exist instantly!
   renderPortfolio(portfolioData);
 
-  // 3. Setup GSAP Entrance & Parallax Animations
+  // 2. Initialize Theme Switcher (Light / Dark Editorial)
+  initThemeSwitcher();
+
+  // 3. Initialize Live IST Clock in Top Nav
+  initLiveClock();
+
+  // 4. Initialize Top Scroll Reading Progress Bar
+  initScrollProgressBar();
+
+  // 5. Initialize Lenis Smooth Scroll
+  initSmoothScroll();
+
+  // 6. Setup GSAP Entrance Animations for Hero
   initAnimations();
 
-  // 4. Setup 3D Tilt for Project Cards
-  initCard3DTilt();
+  // 7. Setup Interactive Magnetic & Spring Physics on Title Letters
+  initLettersPhysics();
 
-  // 5. Setup Dialogs (Case Study & Customizer)
+  // 8. Setup Avatar Holographic Sheen & Micro-Badges Parallax
+  initAvatarSheenAndParallax();
+
+  // 9. Setup 3D Tilt & Dynamic Cursor Spotlight on Project Cards
+  initCard3DTiltAndSpotlight();
+
+  // 10. Setup Project Category Filter Tabs
+  initProjectCategoryFilters();
+
+  // 11. Setup Dialogs (Case Study & Customizer)
   initDialogHandlers();
 
-  // 6. Setup Snake Rope Scroll Progress
+  // 12. Setup Snake Rope Scroll Progress & Traveling Spark
   initSnakeRopeProgress();
 
-  // 7. Refresh Lucide Icons
+  // 13. Setup Custom Fluid Follow Cursor (Desktop)
+  initFluidCursor();
+
+  // 14. Refresh Lucide Icons
   if (window.lucide) {
     lucide.createIcons();
   }
-});
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', bootPortfolio);
+} else {
+  bootPortfolio();
+}
 
 // ==========================================================================
 // 1. SMOOTH SCROLL (LENIS)
@@ -77,7 +99,87 @@ function initSmoothScroll() {
 }
 
 // ==========================================================================
-// 2. RENDER PORTFOLIO DATA FROM DATA.JS
+// 2. THEME SWITCHER (LIGHT / DARK EDITORIAL)
+// ==========================================================================
+function initThemeSwitcher() {
+  const themeToggleBtn = document.getElementById('theme-toggle-btn');
+  
+  const savedTheme = localStorage.getItem('devanshu-portfolio-theme');
+  const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+  
+  const applyTheme = (isDark) => {
+    if (isDark) {
+      document.body.classList.add('dark-theme');
+      if (themeToggleBtn) {
+        themeToggleBtn.setAttribute('aria-checked', 'true');
+        themeToggleBtn.title = "Switch to Warm Editorial Mode (Light)";
+      }
+    } else {
+      document.body.classList.remove('dark-theme');
+      if (themeToggleBtn) {
+        themeToggleBtn.setAttribute('aria-checked', 'false');
+        themeToggleBtn.title = "Switch to Dark Midnight Mode";
+      }
+    }
+  };
+
+  // Initialize theme
+  const initialDark = savedTheme ? savedTheme === 'dark' : prefersDark;
+  applyTheme(initialDark);
+
+  if (themeToggleBtn) {
+    themeToggleBtn.addEventListener('click', () => {
+      const isDark = !document.body.classList.contains('dark-theme');
+      applyTheme(isDark);
+      localStorage.setItem('devanshu-portfolio-theme', isDark ? 'dark' : 'light');
+    });
+  }
+}
+
+// ==========================================================================
+// 3. LIVE IST CLOCK (INDIAN STANDARD TIME)
+// ==========================================================================
+function initLiveClock() {
+  const clockEl = document.getElementById('live-ist-clock');
+  if (!clockEl) return;
+
+  function updateClock() {
+    const now = new Date();
+    // Format compactly in Indian Standard Time (Asia/Kolkata)
+    const options = {
+      timeZone: 'Asia/Kolkata',
+      hour: 'numeric',
+      minute: '2-digit',
+      hour12: true,
+    };
+    const timeString = new Intl.DateTimeFormat('en-US', options).format(now);
+    clockEl.textContent = `IST ${timeString}`;
+  }
+
+  updateClock();
+  setInterval(updateClock, 1000);
+}
+
+// ==========================================================================
+// 4. TOP SCROLL READING PROGRESS BAR
+// ==========================================================================
+function initScrollProgressBar() {
+  const progressBar = document.getElementById('scroll-progress-bar');
+  if (!progressBar) return;
+
+  function updateProgress() {
+    const scrollTop = window.scrollY || document.documentElement.scrollTop;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+    progressBar.style.width = `${Math.min(Math.max(progress, 0), 100)}%`;
+  }
+
+  window.addEventListener('scroll', updateProgress, { passive: true });
+  updateProgress();
+}
+
+// ==========================================================================
+// 5. RENDER PORTFOLIO DATA FROM DATA.JS
 // ==========================================================================
 function renderPortfolio(data) {
   // 1. Profile & Headers
@@ -118,7 +220,7 @@ function renderPortfolio(data) {
     if (avatarPlaceholderView) avatarPlaceholderView.classList.remove('hidden');
   }
 
-  // 2. Experience snake-ladder (3 rungs, names on hover / mobile tap)
+  // 2. Experience snake-ladder
   const expListEl = document.getElementById('experience-list');
   if (expListEl) {
     const jobs = data.experiences.slice(0, 2);
@@ -180,7 +282,7 @@ function renderPortfolio(data) {
     }).join('');
   }
 
-  // 4. Tools logos grid (hover / tap shows name)
+  // 4. Tools logos grid
   const toolsBadgeEl = document.getElementById('tools-badge-list');
   if (toolsBadgeEl) {
     toolsBadgeEl.innerHTML = data.tools.map((t) => {
@@ -203,7 +305,7 @@ function renderPortfolio(data) {
   const projectsGridEl = document.getElementById('projects-3x2-deck');
   if (projectsGridEl) {
     projectsGridEl.innerHTML = data.projects.map((proj, idx) => `
-      <div class="project-grid-card" data-proj-index="${idx}" style="background-color: ${proj.accentBg || '#FAF8F5'};">
+      <div class="project-grid-card" data-proj-index="${idx}" data-category="${proj.category || 'fullstack'}" style="--card-pastel: ${proj.accentBg || '#FAF8F5'};">
         
         <!-- Top Bar: Logo Badge & Category Tag -->
         <div class="card-top-bar">
@@ -243,7 +345,7 @@ function renderPortfolio(data) {
     `).join('');
   }
 
-  // 6. Certificates & Milestones (Snake Rope Bullet Style — with real certificate images)
+  // 6. Certificates & Milestones
   const milestonesListEl = document.getElementById('snake-milestones-list');
   if (milestonesListEl && data.certificates) {
     milestonesListEl.innerHTML = data.certificates.map((cert) => {
@@ -289,7 +391,7 @@ function renderPortfolio(data) {
     });
   }
 
-  // 7. Education (after certificates)
+  // 7. Education
   const educationListEl = document.getElementById('education-list');
   if (educationListEl && data.education) {
     educationListEl.innerHTML = data.education.map((ed) => `
@@ -344,7 +446,6 @@ function bindNamePopups() {
 // CERTIFICATE LIGHTBOX (Full-Screen Image Viewer)
 // ==========================================================================
 function openCertLightbox(imgSrc) {
-  // Remove any existing lightbox first
   const existing = document.getElementById('cert-lightbox-overlay');
   if (existing) existing.remove();
 
@@ -366,14 +467,12 @@ function openCertLightbox(imgSrc) {
 
   document.body.appendChild(overlay);
 
-  // Close on backdrop click or close button
   overlay.addEventListener('click', () => overlay.remove());
   overlay.querySelector('#lightbox-close-btn').addEventListener('click', (e) => {
     e.stopPropagation();
     overlay.remove();
   });
 
-  // Close on Escape key
   const escHandler = (e) => {
     if (e.key === 'Escape') {
       overlay.remove();
@@ -383,10 +482,8 @@ function openCertLightbox(imgSrc) {
   document.addEventListener('keydown', escHandler);
 }
 
-
-
 // ==========================================================================
-// 3. GSAP ENTRANCE & PARALLAX ANIMATIONS
+// 6. GSAP ENTRANCE ANIMATIONS
 // ==========================================================================
 function initAnimations() {
   const startLetterIdle = () => {
@@ -401,7 +498,6 @@ function initAnimations() {
 
   const tl = gsap.timeline({ defaults: { ease: 'power3.out', duration: 0.9 } });
 
-  // 1. Staggered Entrance for "PORTFOLIO '25" Letters
   tl.from('.letter-char', {
     y: 56,
     opacity: 0,
@@ -417,19 +513,24 @@ function initAnimations() {
     ease: 'back.out(2)',
     onComplete: startLetterIdle,
   }, '-=0.4')
-  // 2. Avatar Reveal with Float
   .from('#avatar-card', {
     y: 50,
     opacity: 0,
     scale: 0.9,
     duration: 0.9,
   }, '-=0.5')
+  .from('.floating-micro-badge', {
+    scale: 0,
+    opacity: 0,
+    stagger: 0.1,
+    duration: 0.6,
+    ease: 'back.out(2)',
+  }, '-=0.4')
   .from('.brand-eyebrow', {
     x: -30,
     opacity: 0,
     duration: 0.6,
   }, '-=0.6')
-  // 3. Bio & Experience Stagger
   .from('.intro-section', {
     y: 30,
     opacity: 0,
@@ -446,40 +547,105 @@ function initAnimations() {
     opacity: 0,
     stagger: 0.05,
     duration: 0.4,
-  }, '-=0.5')
-  // 4. Projects 3x2 Grid Pop-In
-  .from('.project-grid-card', {
-    y: 40,
-    opacity: 0,
-    stagger: 0.08,
-    duration: 0.8,
-    ease: 'power2.out',
-  }, '-=0.4');
+  }, '-=0.5');
+}
 
-  // Parallax on Avatar Card
+// ==========================================================================
+// 7. INTERACTIVE MAGNETIC & BOUNCY PHYSICS ON TITLE LETTERS
+// ==========================================================================
+function initLettersPhysics() {
+  const letters = document.querySelectorAll('.letter-char, .poster-year');
+  if (!letters.length || typeof gsap === 'undefined') return;
+
+  letters.forEach((letter) => {
+    letter.addEventListener('mouseenter', () => {
+      const tilt = letter.querySelector('.letter-tilt');
+      if (!tilt) return;
+
+      const randomY = (Math.random() - 0.5) * 16 - 10;
+      const randomRot = (Math.random() - 0.5) * 28;
+      const randomScale = 1.15 + Math.random() * 0.1;
+
+      gsap.to(tilt, {
+        y: randomY,
+        rotation: randomRot,
+        scale: randomScale,
+        duration: 0.25,
+        ease: 'back.out(3)',
+      });
+    });
+
+    letter.addEventListener('mouseleave', () => {
+      const tilt = letter.querySelector('.letter-tilt');
+      if (!tilt) return;
+
+      gsap.to(tilt, {
+        y: 0,
+        rotation: 0,
+        scale: 1,
+        duration: 0.6,
+        ease: 'elastic.out(1.2, 0.4)',
+      });
+    });
+  });
+}
+
+// ==========================================================================
+// 8. AVATAR HOLOGRAPHIC SHEEN & PARALLAX MICRO-BADGES
+// ==========================================================================
+function initAvatarSheenAndParallax() {
   const avatarCard = document.getElementById('avatar-card');
-  if (avatarCard) {
-    window.addEventListener('mousemove', (e) => {
-      const { innerWidth, innerHeight } = window;
-      const xPos = (e.clientX / innerWidth - 0.5) * 2;
-      const yPos = (e.clientY / innerHeight - 0.5) * 2;
+  const avatarStage = document.getElementById('avatar-stage');
+  const microBadges = document.querySelectorAll('.floating-micro-badge');
 
+  if (!avatarCard || !avatarStage) return;
+
+  window.addEventListener('mousemove', (e) => {
+    const rect = avatarStage.getBoundingClientRect();
+    const isOverStage = e.clientX >= rect.left && e.clientX <= rect.right && e.clientY >= rect.top && e.clientY <= rect.bottom;
+
+    const { innerWidth, innerHeight } = window;
+    const xPos = (e.clientX / innerWidth - 0.5) * 2;
+    const yPos = (e.clientY / innerHeight - 0.5) * 2;
+
+    // Avatar 3D Perspective Tilt
+    if (typeof gsap !== 'undefined') {
       gsap.to(avatarCard, {
-        rotationY: xPos * 8,
-        rotationX: -yPos * 6,
+        rotationY: xPos * 9,
+        rotationX: -yPos * 7,
         x: xPos * 10,
         y: yPos * 6,
         ease: 'power1.out',
         duration: 0.5,
       });
-    });
-  }
+
+      // Parallax for Micro-Badges
+      microBadges.forEach((badge) => {
+        const depth = parseFloat(badge.getAttribute('data-parallax-depth')) || 15;
+        gsap.to(badge, {
+          x: xPos * depth,
+          y: yPos * depth,
+          ease: 'power1.out',
+          duration: 0.6,
+        });
+      });
+    }
+
+    // Update Holographic Sheen Position
+    if (isOverStage) {
+      const cardRect = avatarCard.getBoundingClientRect();
+      const sheenX = ((e.clientX - cardRect.left) / cardRect.width) * 100;
+      const sheenY = ((e.clientY - cardRect.top) / cardRect.height) * 100;
+      avatarCard.style.setProperty('--sheen-x', `${sheenX}%`);
+      avatarCard.style.setProperty('--sheen-y', `${sheenY}%`);
+    }
+  });
 }
 
 // ==========================================================================
-// 4. 3D PERSPECTIVE TILT ON 3x2 PROJECT CARDS
+// 9. 3D PERSPECTIVE TILT & SPOTLIGHT ON PROJECT CARDS
 // ==========================================================================
-function initCard3DTilt() {
+function initCard3DTiltAndSpotlight() {
   const cards = document.querySelectorAll('.project-grid-card');
 
   cards.forEach((card) => {
@@ -488,17 +654,22 @@ function initCard3DTilt() {
       const x = e.clientX - rect.left;
       const y = e.clientY - rect.top;
 
+      // Update Cursor-Tracked Spotlight coordinates
+      card.style.setProperty('--mouse-x', `${x}px`);
+      card.style.setProperty('--mouse-y', `${y}px`);
+
+      // 3D Tilt calculation
       const centerX = rect.width / 2;
       const centerY = rect.height / 2;
 
-      const rotateX = ((y - centerY) / centerY) * -8;
-      const rotateY = ((x - centerX) / centerX) * 8;
+      const rotateX = ((y - centerY) / centerY) * -7;
+      const rotateY = ((x - centerX) / centerX) * 7;
 
-      card.style.transform = `perspective(700px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-6px) scale(1.02)`;
+      card.style.transform = `perspective(800px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-6px) scale(1.02)`;
     });
 
     card.addEventListener('mouseleave', () => {
-      card.style.transform = 'perspective(700px) rotateX(0deg) rotateY(0deg) translateY(0) scale(1)';
+      card.style.transform = 'perspective(800px) rotateX(0deg) rotateY(0deg) translateY(0) scale(1)';
     });
   });
 
@@ -515,34 +686,93 @@ function initCard3DTilt() {
 }
 
 // ==========================================================================
-// 5. SNAKE ROPE TIMELINE PROGRESS SCROLL
+// 10. PROJECT CATEGORY FILTERS (INSTANT & SMOOTH)
 // ==========================================================================
-function initSnakeRopeProgress() {
-  const snakePath = document.getElementById('snake-progress-path');
-  if (!snakePath) return;
+function initProjectCategoryFilters() {
+  const filterBtns = document.querySelectorAll('.filter-pill');
+  const cards = document.querySelectorAll('.project-grid-card');
 
-  window.addEventListener('scroll', () => {
-    const timelineContainer = document.getElementById('snake-timeline-container');
-    if (!timelineContainer) return;
+  filterBtns.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const filter = btn.getAttribute('data-filter');
 
-    const rect = timelineContainer.getBoundingClientRect();
-    const windowHeight = window.innerHeight;
+      // Update active pill
+      filterBtns.forEach((b) => {
+        b.classList.remove('active');
+        b.setAttribute('aria-selected', 'false');
+      });
+      btn.classList.add('active');
+      btn.setAttribute('aria-selected', 'true');
 
-    if (rect.top < windowHeight && rect.bottom > 0) {
-      const total = rect.height;
-      const current = windowHeight - rect.top;
-      const progress = Math.min(Math.max(current / total, 0), 1);
-      
-      // Update dashoffset
-      const pathLength = 1000;
-      snakePath.style.strokeDasharray = pathLength;
-      snakePath.style.strokeDashoffset = pathLength * (1 - progress);
-    }
+      // Filter project cards instantly without lag
+      cards.forEach((card) => {
+        const cardCategory = card.getAttribute('data-category');
+        const shouldShow = filter === 'all' || cardCategory === filter || (filter === 'fullstack' && (cardCategory === 'fullstack' || cardCategory === 'utility'));
+
+        if (shouldShow) {
+          card.style.display = 'flex';
+          card.style.opacity = '1';
+          card.style.transform = 'none';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    });
   });
 }
 
 // ==========================================================================
-// 6. MODAL & DIALOG HANDLERS (CASE STUDY & CUSTOMIZER)
+// 11. SNAKE ROPE PROGRESS & TRAVELING GLOWING SPARK
+// ==========================================================================
+function initSnakeRopeProgress() {
+  const snakePath = document.getElementById('snake-progress-path');
+  const sparkHead = document.getElementById('snake-spark-head');
+  const timelineContainer = document.getElementById('snake-timeline-container');
+  if (!snakePath || !sparkHead || !timelineContainer) return;
+
+  function updateSnakeProgress() {
+    const rect = timelineContainer.getBoundingClientRect();
+    const windowHeight = window.innerHeight;
+
+    // Anchor at 55% of viewport height
+    const triggerY = windowHeight * 0.55;
+    const current = triggerY - rect.top;
+    const total = rect.height;
+
+    const progress = Math.min(Math.max(current / total, 0), 1);
+
+    // Total path length in SVG geometry
+    const totalPathLength = snakePath.getTotalLength ? snakePath.getTotalLength() : 800;
+    snakePath.style.strokeDasharray = totalPathLength;
+    snakePath.style.strokeDashoffset = totalPathLength * (1 - progress);
+
+    // Position spark circle exactly at the current leading tip of the stroke
+    if (snakePath.getPointAtLength) {
+      const currentLen = totalPathLength * progress;
+      const pt = snakePath.getPointAtLength(currentLen);
+
+      sparkHead.setAttribute('cx', pt.x);
+      sparkHead.setAttribute('cy', pt.y);
+      sparkHead.style.opacity = progress > 0.005 ? '1' : '0';
+
+      // Turn glowing GREEN when reaching the end milestone
+      if (progress >= 0.94) {
+        sparkHead.classList.add('spark-complete');
+        snakePath.classList.add('path-complete');
+      } else {
+        sparkHead.classList.remove('spark-complete');
+        snakePath.classList.remove('path-complete');
+      }
+    }
+  }
+
+  window.addEventListener('scroll', updateSnakeProgress, { passive: true });
+  window.addEventListener('resize', updateSnakeProgress, { passive: true });
+  updateSnakeProgress();
+}
+
+// ==========================================================================
+// 12. DIALOG HANDLERS (CASE STUDY & CUSTOMIZER)
 // ==========================================================================
 function initDialogHandlers() {
   const caseDialog = document.getElementById('case-study-dialog');
@@ -566,7 +796,6 @@ function initDialogHandlers() {
       }
     });
 
-    // Ensure touch and wheel events scroll the card directly
     const card = caseDialog.querySelector('.dialog-card');
     if (card) {
       card.addEventListener('wheel', (e) => {
@@ -578,7 +807,7 @@ function initDialogHandlers() {
     }
   }
 
-  // Resume dropdown (preview + full screen)
+  // Resume dropdown
   const resumeDropdown = document.getElementById('resume-dropdown');
   const resumeBtn = document.getElementById('resume-btn');
   const resumeMenu = document.getElementById('resume-menu');
@@ -622,15 +851,23 @@ function initDialogHandlers() {
     });
   }
 
-  // Connect dropdown (email + go to mail)
+  // Connect dropdown & Gmail Web Compose Launcher
   const connectDropdown = document.getElementById('connect-dropdown');
   const connectBtn = document.getElementById('connect-btn');
   const connectMenu = document.getElementById('connect-menu');
   const connectMailLink = document.getElementById('connect-mail-link');
   const connectMailId = document.getElementById('connect-mail-id');
+  const connectMailGoBtn = document.getElementById('connect-mail-go-btn');
   const profileEmail = (portfolioData.profile && portfolioData.profile.email) || 'kumardevanshu3001@gmail.com';
 
-  if (connectMailLink) connectMailLink.href = `mailto:${profileEmail}`;
+  const gmailComposeUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(profileEmail)}&su=${encodeURIComponent('Hello Devanshu - Project Inquiry')}`;
+
+  if (connectMailLink) {
+    connectMailLink.href = gmailComposeUrl;
+    connectMailLink.target = '_blank';
+    connectMailLink.rel = 'noopener noreferrer';
+  }
+
   if (connectMailId) connectMailId.textContent = profileEmail;
 
   function setConnectOpen(open) {
@@ -649,6 +886,48 @@ function initDialogHandlers() {
     });
   }
 
+  // Handle Mail Connecting Animation and Launch
+  if (connectMailLink) {
+    connectMailLink.addEventListener('click', (e) => {
+      e.preventDefault();
+
+      if (connectMailGoBtn) {
+        connectMailGoBtn.classList.add('is-connecting');
+        connectMailGoBtn.innerHTML = `
+          <span class="mail-spinner"></span>
+          <span>Connecting...</span>
+        `;
+      }
+
+      setTimeout(() => {
+        // Open Gmail Composer in new tab
+        const win = window.open(gmailComposeUrl, '_blank', 'noopener,noreferrer');
+        if (!win || win.closed || typeof win.closed === 'undefined') {
+          // Fallback to mailto if browser blocks popup
+          window.location.href = `mailto:${profileEmail}?subject=Hello%20Devanshu%20-%20Project%20Inquiry`;
+        }
+
+        if (connectMailGoBtn) {
+          connectMailGoBtn.classList.remove('is-connecting');
+          connectMailGoBtn.classList.add('is-connected');
+          connectMailGoBtn.innerHTML = `
+            <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            <span>Opening Gmail!</span>
+          `;
+
+          setTimeout(() => {
+            connectMailGoBtn.classList.remove('is-connected');
+            connectMailGoBtn.innerHTML = `
+              <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"></path><path d="M8 7h9v9"></path></svg>
+              <span>Go to mail</span>
+            `;
+            setConnectOpen(false);
+          }, 1400);
+        }
+      }, 450);
+    });
+  }
+
   document.addEventListener('click', (e) => {
     if (connectDropdown && !connectDropdown.contains(e.target)) {
       setConnectOpen(false);
@@ -664,90 +943,9 @@ function initDialogHandlers() {
       setResumeOpen(false);
     }
   });
-
-  // Customizer Dialog (kept for optional use; not shown in nav)
-  const customizerDialog = document.getElementById('customizer-dialog');
-  const customizerCloseBtn = document.getElementById('customizer-close-btn');
-
-  if (customizerDialog) {
-    customizerDialog.addEventListener('close', () => {
-      if (lenisInstance) lenisInstance.start();
-      document.body.classList.remove('modal-open');
-    });
-
-
-    if (customizerCloseBtn) {
-      customizerCloseBtn.addEventListener('click', () => {
-        customizerDialog.close();
-      });
-    }
-
-    customizerDialog.addEventListener('click', (e) => {
-      if (e.target === customizerDialog) {
-        customizerDialog.close();
-      }
-    });
-
-    const custCard = customizerDialog.querySelector('.dialog-card');
-    if (custCard) {
-      custCard.addEventListener('wheel', (e) => {
-        e.stopPropagation();
-      }, { passive: true });
-      custCard.addEventListener('touchmove', (e) => {
-        e.stopPropagation();
-      }, { passive: true });
-    }
-  }
-
-  // Customizer Tabs
-  const tabBtns = document.querySelectorAll('.form-tabs-bar .tab-btn');
-  tabBtns.forEach((btn) => {
-    btn.addEventListener('click', () => {
-      tabBtns.forEach((b) => b.classList.remove('active'));
-      document.querySelectorAll('.tab-pane').forEach((p) => p.classList.remove('active'));
-
-      btn.classList.add('active');
-      const targetPane = document.getElementById(btn.getAttribute('data-tab'));
-      if (targetPane) {
-        targetPane.classList.add('active');
-      }
-
-      if (btn.getAttribute('data-tab') === 'tab-export') {
-        updateExportCode();
-      }
-    });
-  });
-
-  // Apply Changes Button
-  const applyBtn = document.getElementById('apply-changes-btn');
-  if (applyBtn) {
-    applyBtn.addEventListener('click', () => {
-      applyCustomizerValues();
-      customizerDialog.close();
-    });
-  }
-
-  // Copy JSON button
-  const copyBtn = document.getElementById('copy-json-btn');
-  if (copyBtn) {
-    copyBtn.addEventListener('click', () => {
-      const exportBox = document.getElementById('cust-export-json');
-      if (exportBox) {
-        exportBox.select();
-        navigator.clipboard.writeText(exportBox.value).then(() => {
-          copyBtn.innerHTML = '<i data-lucide="check"></i> Copied to Clipboard!';
-          if (window.lucide) lucide.createIcons();
-          setTimeout(() => {
-            copyBtn.innerHTML = '<i data-lucide="copy"></i> Copy Configuration';
-            if (window.lucide) lucide.createIcons();
-          }, 2000);
-        });
-      }
-    });
-  }
 }
 
-// Open Case Study Details in Dialog
+// Open Case Study Details in Dialog with Count-Up Numbers
 function openCaseStudyModal(project) {
   const caseDialog = document.getElementById('case-study-dialog');
   if (!caseDialog) return;
@@ -764,10 +962,7 @@ function openCaseStudyModal(project) {
   const techStackList = document.getElementById('modal-tech-stack-list');
   const actionLink = document.getElementById('modal-action-link');
 
-  // Remove old accentBg (now full-image banner)
   if (headerBanner) {
-    headerBanner.style.backgroundColor = '';
-    // Optional: set a subtle accent tint via CSS var
     headerBanner.style.setProperty('--project-accent', project.accentBg || '#EFE4D8');
   }
   if (cardNum) cardNum.textContent = project.number;
@@ -797,10 +992,13 @@ function openCaseStudyModal(project) {
   if (metricsList) {
     metricsList.innerHTML = (project.metrics || []).map((m) => `
       <div class="metric-tile-card">
-        <div class="metric-tile-val">${m.value}</div>
+        <div class="metric-tile-val" data-target-val="${m.value}">${m.value}</div>
         <div class="metric-tile-lbl">${m.label}</div>
       </div>
     `).join('');
+
+    // Animate Metric Counters
+    animateMetricCounters();
   }
 
   if (techStackList) {
@@ -813,8 +1011,6 @@ function openCaseStudyModal(project) {
     actionLink.href = project.liveUrl || '#';
   }
 
-
-  // Stop Lenis so it doesn't intercept modal scrolling
   if (lenisInstance) {
     lenisInstance.stop();
   }
@@ -822,7 +1018,6 @@ function openCaseStudyModal(project) {
 
   caseDialog.showModal();
 
-  // Reset scroll position to top
   const card = caseDialog.querySelector('.dialog-card');
   if (card) {
     card.scrollTop = 0;
@@ -831,68 +1026,104 @@ function openCaseStudyModal(project) {
   if (window.lucide) lucide.createIcons();
 }
 
+// Animate Numeric Counters in Case Study
+function animateMetricCounters() {
+  const metricValues = document.querySelectorAll('.metric-tile-val[data-target-val]');
+  metricValues.forEach((el) => {
+    const rawVal = el.getAttribute('data-target-val');
+    // Check if contains digits
+    const numMatch = rawVal.match(/(\d+[\d,]*)/);
+    if (!numMatch) return; // e.g. "AES-256" or "Multi-User"
 
-// Populate Customizer fields from current data
-function populateCustomizerForm() {
-  const custNameHeader = document.getElementById('cust-name-header');
-  const custGreeting = document.getElementById('cust-greeting');
-  const custBio = document.getElementById('cust-bio');
-  const custResumeUrl = document.getElementById('cust-resume-url');
-  const custAvatarUrl = document.getElementById('cust-avatar-url');
+    const cleanNum = parseFloat(numMatch[1].replace(/,/g, ''));
+    if (isNaN(cleanNum) || cleanNum === 0) return;
 
-  if (custNameHeader) custNameHeader.value = portfolioData.profile.nameHeader;
-  if (custGreeting) custGreeting.value = portfolioData.profile.greeting;
-  if (custBio) custBio.value = portfolioData.profile.bio;
-  if (custResumeUrl) custResumeUrl.value = portfolioData.profile.resumeUrl || '';
-  if (custAvatarUrl) custAvatarUrl.value = portfolioData.profile.avatarImage || '';
+    const prefix = rawVal.slice(0, numMatch.index);
+    const suffix = rawVal.slice(numMatch.index + numMatch[0].length);
 
-  // Project cards fields (6 projects)
-  const projEditList = document.getElementById('projects-quick-edit-list');
-  if (projEditList) {
-    projEditList.innerHTML = portfolioData.projects.map((p, idx) => `
-      <div class="form-group" style="padding: 12px; background: #FAF8F5; border-radius: 8px; border: 1px solid #E5E7EB; margin-bottom: 12px;">
-        <label><strong>Project ${p.number} — ${p.title}:</strong></label>
-        <div class="form-group" style="margin-bottom: 6px;">
-          <input type="text" id="cust-proj-title-${idx}" value="${p.title}" placeholder="Project Title">
-        </div>
-        <div class="form-group" style="margin-bottom: 6px;">
-          <input type="text" id="cust-proj-url-${idx}" value="${p.liveUrl}" placeholder="Live URL (https://...)">
-        </div>
-        <div class="form-group" style="margin-bottom: 0;">
-          <input type="text" id="cust-proj-review-${idx}" value="${p.shortReview || ''}" placeholder="Short review / description">
-        </div>
-      </div>
-    `).join('');
-  }
+    let start = 0;
+    const duration = 900;
+    const startTime = performance.now();
+
+    function step(currentTime) {
+      const elapsed = currentTime - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      // Ease out cubic
+      const easeOut = 1 - Math.pow(1 - progress, 3);
+      const currentVal = Math.floor(easeOut * cleanNum);
+
+      el.textContent = `${prefix}${currentVal.toLocaleString()}${suffix}`;
+
+      if (progress < 1) {
+        requestAnimationFrame(step);
+      } else {
+        el.textContent = rawVal;
+      }
+    }
+
+    requestAnimationFrame(step);
+  });
 }
 
-// Apply edited values to live portfolio
-function applyCustomizerValues() {
-  portfolioData.profile.nameHeader = document.getElementById('cust-name-header').value;
-  portfolioData.profile.greeting = document.getElementById('cust-greeting').value;
-  portfolioData.profile.bio = document.getElementById('cust-bio').value;
-  portfolioData.profile.resumeUrl = document.getElementById('cust-resume-url').value;
-  portfolioData.profile.avatarImage = document.getElementById('cust-avatar-url').value;
+// ==========================================================================
+// 13. CUSTOM FLUID FOLLOW CURSOR (DESKTOP)
+// ==========================================================================
+function initFluidCursor() {
+  const dot = document.getElementById('cursor-dot');
+  const ring = document.getElementById('cursor-ring');
+  if (!dot || !ring) return;
 
-  portfolioData.projects.forEach((p, idx) => {
-    const titleInput = document.getElementById(`cust-proj-title-${idx}`);
-    const urlInput = document.getElementById(`cust-proj-url-${idx}`);
-    const reviewInput = document.getElementById(`cust-proj-review-${idx}`);
+  // Check if touch device
+  if (window.matchMedia && window.matchMedia('(pointer: coarse)').matches) {
+    return;
+  }
 
-    if (titleInput) p.title = titleInput.value;
-    if (urlInput) p.liveUrl = urlInput.value;
-    if (reviewInput) p.shortReview = reviewInput.value;
+  let mouseX = window.innerWidth / 2;
+  let mouseY = window.innerHeight / 2;
+  let ringX = mouseX;
+  let ringY = mouseY;
+  let isMoving = false;
+
+  window.addEventListener('mousemove', (e) => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+
+    dot.style.left = `${mouseX}px`;
+    dot.style.top = `${mouseY}px`;
+
+    if (!isMoving) {
+      isMoving = true;
+      document.body.classList.add('cursor-active');
+    }
   });
 
-  // Re-render
-  renderPortfolio(portfolioData);
-  initCard3DTilt();
-}
+  // Smooth Lerp animation for ring
+  function renderCursor() {
+    ringX += (mouseX - ringX) * 0.18;
+    ringY += (mouseY - ringY) * 0.18;
 
-// Update Export Code Textarea
-function updateExportCode() {
-  const exportBox = document.getElementById('cust-export-json');
-  if (exportBox) {
-    exportBox.value = `const portfolioData = ${JSON.stringify(portfolioData, null, 2)};`;
+    ring.style.left = `${ringX}px`;
+    ring.style.top = `${ringY}px`;
+
+    requestAnimationFrame(renderCursor);
   }
+  requestAnimationFrame(renderCursor);
+
+  // Attach hover states
+  function updateCursorHoverListeners() {
+    const hoverTargets = document.querySelectorAll(
+      'a, button, .project-grid-card, .letter-char, .avatar-perspective-card, .milestone-image-col, .tool-node, .social-link-pill'
+    );
+
+    hoverTargets.forEach((el) => {
+      el.addEventListener('mouseenter', () => {
+        document.body.classList.add('cursor-hover');
+      });
+      el.addEventListener('mouseleave', () => {
+        document.body.classList.remove('cursor-hover');
+      });
+    });
+  }
+
+  updateCursorHoverListeners();
 }
